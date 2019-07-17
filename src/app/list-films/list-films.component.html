@@ -1,0 +1,239 @@
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+  </head>
+  <body>
+      <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+          <a href="#" class="navbar-brand col-sm-3 col-md-2 mr-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+              <strong>FILM</strong>
+            </a>
+          <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+          <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+              <a class="nav-link" href="#">Sign out</a>
+            </li>
+          </ul>
+        </nav>
+
+    <div class="container-fluid" *ngIf="currentUser.length>0" >
+        <div class="row">
+          <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">
+                    <span data-feather="home"></span>
+                    Dashboard <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="" (click)="acteurs()">
+                    <span data-feather="file"></span>
+                     Acteurs
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Liste des Films</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                  <div class="btn-group mr-2">
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newFilmModal" data-keyboard="true" (click)="putNewFilm()">Ajouter Film</button>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="table-responsive">
+                  <table class="table table-striped table-sm">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Titre</th>
+                        <th>Genre</th>
+                        <th>Prix</th>
+                        <th>Salle</th>
+                        <th>Date</th>
+                        <th>#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let f of films" >
+                        <td>{{f.titre}}</td>
+                        <td>{{f.genre}}</td>
+                        <td>{{f.prix}}</td>
+                        <td> salle &nbsp;{{f.numero_salle}}</td>
+                        <td>{{f.date_debut | date: 'dd/MM/yyyy'}}</td>
+                        <td>
+                          <a href="" data-toggle="modal" data-target="#modalId" data-keyboard="true" class="btn btn-sm btn-danger" (click)="putFilmToDelete(f)">delete</a>
+                          <a href=""  class="btn btn-sm btn-success" data-toggle="modal" data-target="#updateFilmModal" data-keyboard="true" (click)="putUpdateFilm(f)">update</a>
+                          <a href=""  class="btn btn-sm btn-primary" (click)="filmDetails(f)">edit</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+              </main>
+        </div>
+      </div>
+      <!-- modal suppression -->
+      <div class="modal fade" id="modalId" >
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Suppression de film</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <p>voulez-vous vraiment supprimer ce film ?</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal>Fermer</button>
+                      <button type="button" class="btn btn-primary" (click)="deleteFilm()">Confirmer</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!--new film modal-->
+      <div class="modal fade" id="newFilmModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" >Ajouter un Film</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Titre :</label>
+                              <input type="text" class="form-control" id="recipient-name" name="titre"   [(ngModel)]="film.titre" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Description:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="description"   [(ngModel)]="film.description" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Genre:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="genre"   [(ngModel)]="film.genre" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Date film:</label>
+                              <input type="date" class="form-control" id="recipient-name" name="date_debut"   [(ngModel)]="film.date_debut" />
+                          </div>
+                          <div class="row">
+                              <div class="form-group col-sm-6">
+                                  <label for="recipient-name" class="form-control-label">Heure debut:</label>
+                                  <input type="text" class="form-control" id="recipient-name" name="heure_debut" placeholder="hh:mm"   [(ngModel)]="film.heure_debut" />
+                              </div>
+                              <div class="form-group col-sm-6">
+                                  <label for="recipient-name" class="form-control-label">Heure fin:</label>
+                                  <input type="text" class="form-control" id="recipient-name" name="heure_fin" placeholder="hh:mm"   [(ngModel)]="film.heure_fin" />
+                              </div>
+                              </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Prix:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="prix"   [(ngModel)]="film.prix" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Réalisateur:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="realisateur"   [(ngModel)]="film.realisateur" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Acteurs :</label>
+                              <input type="text" class="form-control" id="recipient-name" name="acteurs"   [(ngModel)]="film.acteurs" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Numéro de salle:</label>
+                              <input type="number" class="form-control" id="recipient-name" name="numero_salle"   [(ngModel)]="film.numero_salle" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Nombre de places:</label>
+                              <input type="number" class="form-control" id="recipient-name" name="nombre_places"   [(ngModel)]="film.nombre_places" />
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal>Close</button>
+                      <button type="button" class="btn btn-primary" (click)="addFilm()">Ajouter</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+      <!--update film modal-->
+      <div class="modal fade" id="updateFilmModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" >Modifier un Film</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Titre :</label>
+                              <input type="text" class="form-control" id="recipient-name" name="titre"   [(ngModel)]="film.titre" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Description:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="description"   [(ngModel)]="film.description" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Genre:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="genre"   [(ngModel)]="film.genre" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Date film:</label>
+                              <input type="date" class="form-control" id="recipient-name" name="date_debut"   [(ngModel)]="film.date_debut" />
+                          </div>
+                          <div class="row">
+                          <div class="form-group col-sm-6">
+                              <label for="recipient-name" class="form-control-label">Heure debut:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="heure_debut" placeholder="hh:mm"   [(ngModel)]="film.heure_debut" />
+                          </div>
+                          <div class="form-group col-sm-6">
+                              <label for="recipient-name" class="form-control-label">Heure fin:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="heure_fin" placeholder="hh:mm"   [(ngModel)]="film.heure_fin" />
+                          </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Prix:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="prix"   [(ngModel)]="film.prix" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Réalisateur:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="realisateur"   [(ngModel)]="film.realisateur" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Acteurs :</label>
+                              <input type="text" class="form-control" id="recipient-name" name="acteurs"   [(ngModel)]="film.acteurs" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Numéro de salle:</label>
+                              <input type="number" class="form-control" id="recipient-name" name="numero_salle"   [(ngModel)]="film.numero_salle" />
+                          </div>
+                          <div class="form-group">
+                              <label for="recipient-name" class="form-control-label">Nombre de places:</label>
+                              <input type="number" class="form-control" id="recipient-name" name="nombre_places"   [(ngModel)]="film.nombre_places" />
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal>Close</button>
+                      <button type="button" class="btn btn-primary" (click)="updateFilm()">Modifier</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+  </body>
+</html>

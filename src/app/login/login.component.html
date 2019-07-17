@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  </head>
+<body>
+    <div class="container">
+
+        <div class="jumbotron">
+          <div class="center">
+              <a href="#" class="navbar-brand d-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                  <strong>FILM</strong>
+                </a>
+          </div>
+          <br/>
+          <h4  class="text-center text-primary">authentification d'administrateur </h4>
+          <hr>
+          <form novalidate (submit)="login()">
+            <div class="form-group">
+              <label class="form-label" for="username"><b>Email :</b></label>
+              <input type="text" id="username" class="form-control" name="username" [(ngModel)]="username">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password"><b>Password :</b></label>
+                <input type="password" id="password" class="form-control" name="password" [(ngModel)]="password">
+              </div>
+              <br/>
+              <div>
+                <input type="Submit" value="Login" class="btn btn-success"/>
+                <input type="reset" class="btn btn-danger"/>
+              </div>
+              <br/>
+              <h4 class="text-danger"><b>{{failed}}</b></h4>
+              <br/>
+          </form>
+        </div>
+    </div>
+</body>
+</html>

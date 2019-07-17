@@ -1,0 +1,103 @@
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+  </head>
+  <body>
+
+      <header>
+          <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                  <h4 class="text-white">About</h4>
+                  <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                  <h4 class="text-white">Contact</h4>
+                  <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                    <li><a href="#" class="text-white">Like on Facebook</a></li>
+                    <li><a href="#" class="text-white">Email me</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container d-flex justify-content-between">
+              <a href="" class="navbar-brand d-flex align-items-center" (click)="accueil()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <strong>FILM</strong>
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+          </div>
+        </header>
+        <br/>
+        <br/>
+      <div class="container">
+      <div class="card">
+        <div class="row">
+          <aside class="col-sm-5 border-right">
+      <article class="gallery-wrap">
+      <div class="img-big-wrap">
+        <div> <a href="#"><img src="http://localhost:8002/yosamo/files/{{film.affiche}}"></a></div>
+      </div> <!-- slider-product.// -->
+      <div class="img-small-wrap">
+        <div class="item-gallery"> <img src="http://localhost:8002/yosamo/files/film1.png"> </div>
+        <div class="item-gallery"> <img src="http://localhost:8002/yosamo/files/film2.png"> </div>
+        <div class="item-gallery"> <img src="http://localhost:8002/yosamo/files/film3.png"> </div>
+        <div class="item-gallery"> <img src="http://localhost:8002/yosamo/files/film4.png"> </div>
+      </div> <!-- slider-nav.// -->
+      </article> <!-- gallery-wrap .end// -->
+          </aside>
+          <aside class="col-sm-7">
+      <article class="card-body p-5">
+        <h3 class="title mb-3">{{film.titre}}</h3>
+
+      <p class="price-detail-wrap">
+        <span class="price h3 text-warning">
+            <span class="num">{{film.prix}} &nbsp;</span><span class="currency">DHS </span>
+        </span>
+      </p>
+      <dl class="item-property">
+        <dt>Description</dt>
+        <dd><p>{{film.description}} </p></dd>
+      </dl>
+      <dl class="param param-feature">
+        <dt> Réalisateur , Genre</dt>
+        <dd> {{film.realisateur}} ,{{film.genre}}</dd>
+      </dl>
+      <dl class="param param-feature">
+        <dt>Salle , Date , Houraire</dt>
+        <dd>salle&nbsp;{{film.numero_salle}} , {{film.date_debut | date: 'dd/MM/yyyy'}} , [{{film.heure_debut}}-->{{film.heure_fin}}]</dd>
+      </dl>
+      <dl class="param param-feature">
+        <dt>Acteurs</dt>
+        <dd>{{film.acteurs}}</dd>
+      </dl>  <!-- item-property-hor .// -->
+        <a href="" class="btn btn-lg btn-primary text-uppercase" (click)="back()"> Back </a>
+        <a href="#" class="btn btn-lg btn-outline-warning text-uppercase"> <i class="fas fa-shopping-cart">Ticket</i> </a>
+      </article>
+          </aside>
+        </div>
+      </div>
+      </div>
+      <br>
+      <br>
+      <footer class="text-muted">
+          <div class="container">
+            <p class="float-right">
+              <a href="#">Back to top</a>
+            </p>
+            <p>Gestion des films &copy; Bootstrap, but please download and customize it for yourself!</p>
+            <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+          </div>
+        </footer>
+  </body>
+</html>
